@@ -1,0 +1,200 @@
+import { t, concept, action, keyed, reply } from '../helpers.js';
+
+export default {
+  slug: 'paediatric-ear-pain',
+  title: t('Ear Pain and Fever in a Toddler', 'ألم في الأذن وحرارة لدى طفل صغير'),
+  specialty: 'Paediatrics / ENT',
+  difficulty: 'easy',
+  isPublished: true,
+  estimatedMinutes: 15,
+
+  triageBrief: t(
+    'Yusuf, 3 years old, is brought to the paediatric emergency department by his mother Layla with ear pain and fever. Triage: alert, crying intermittently, temperature 38.9 °C. Take a history from the mother, examine, decide whether any tests are needed, and agree a management and safety-net plan.',
+    'يوسف، ٣ سنوات، أحضرته والدته ليلى إلى طوارئ الأطفال بسبب ألم في الأذن وحرارة. الفرز: واعٍ، يبكي بشكل متقطع، الحرارة ٣٨.٩. خذ التاريخ المرضي من الأم، وافحص، وقرر إن كانت هناك حاجة لفحوصات، واتفق على خطة علاج وإرشادات أمان.',
+  ),
+  patient: {
+    name: t('Yusuf (with his mother Layla)', 'يوسف (مع والدته ليلى)'),
+    age: 3,
+    sex: 'male',
+    setting: t('Paediatric Emergency Department', 'طوارئ الأطفال'),
+  },
+
+  patientPersona: `You are Layla, the 31-year-old mother of Yusuf, who is 3 years old (weight about 14 kg). You answer the doctor's questions about your son. Yusuf sits on your lap, sometimes crying and pulling at his right ear.
+
+What you know (reveal only when asked):
+- About 5 days ago Yusuf had a runny nose and a mild cough, like a normal cold.
+- Two days ago he started crying, saying his right ear hurts, and pulling at it. He is worse at night and woke up crying several times.
+- Fever started yesterday. Last night you measured 39.2 °C under the arm. You gave paracetamol syrup 4 hours ago; it helps for a few hours.
+- No discharge or fluid coming from the ear. You don't think his hearing has changed, but he is grumpy.
+- He is eating less but drinking juice and water fine. He has had about the usual number of wet nappies today.
+- No vomiting, no diarrhoea. No rash. He is not unusually sleepy; he moves his neck normally and does not mind the light.
+- No swelling or redness behind the ear, and the ear doesn't stick out.
+- He had one ear infection at 18 months, treated with antibiotic syrup. No other illnesses, no operations.
+- His vaccinations are all up to date.
+- No allergies to any medicines.
+- He goes to nursery 5 days a week. His father smokes, but only on the balcony.
+- You are worried and tired, and you ask: "Does he need antibiotics?" and "Is it serious?"`,
+
+  scriptedReplies: [
+    reply('ear_pain', 'He keeps pulling at his right ear and crying that it hurts, especially at night.', 'يشد أذنه اليمنى ويبكي أنها تؤلمه، خصوصاً في الليل.'),
+    reply('onset_duration', 'The ear pain started two days ago. He had a cold for about five days before that.', 'بدأ ألم الأذن قبل يومين، وكان عنده زكام قبلها بخمسة أيام تقريباً.'),
+    reply('fever', 'Yes, last night it was 39.2. I gave him paracetamol syrup four hours ago.', 'نعم، كانت ٣٩.٢ البارحة. أعطيته شراب باراسيتامول قبل أربع ساعات.'),
+    reply('preceding_urti', 'He had a runny nose and a little cough for about five days.', 'كان عنده سيلان أنف وسعال خفيف منذ خمسة أيام تقريباً.'),
+    reply('ear_discharge', 'No, nothing has come out of his ear.', 'لا، لم يخرج شيء من أذنه.'),
+    reply('hearing', "I don't think his hearing has changed.", 'لا أظن أن سمعه تغيّر.'),
+    reply('hydration', 'He is eating less but drinking fine, and his nappies are wet as usual.', 'يأكل أقل لكنه يشرب جيداً، والحفاضات مبللة كالعادة.'),
+    reply('ruleout_meningism', 'No, he moves his neck fine, no rash, and he is not too sleepy.', 'لا، يحرك رقبته طبيعياً، ولا يوجد طفح، وليس نعساناً بشكل غريب.'),
+    reply('ruleout_mastoid', 'No swelling behind the ear, and it does not stick out.', 'لا يوجد تورم خلف الأذن، ولا تبرز للخارج.'),
+    reply('gi_symptoms', 'No vomiting and no diarrhoea.', 'لا قيء ولا إسهال.'),
+    reply('previous_episodes', 'He had one ear infection when he was 18 months old.', 'أصيب بالتهاب أذن مرة واحدة عندما كان عمره ١٨ شهراً.'),
+    reply('vaccination', 'All his vaccinations are up to date.', 'كل تطعيماته مكتملة.'),
+    reply('allergies', 'No allergies to any medicines.', 'ليس لديه حساسية من أي دواء.'),
+    reply('risk_factors', 'He goes to nursery every weekday. His father smokes, but outside on the balcony.', 'يذهب إلى الحضانة كل يوم. والده يدخن لكن في الشرفة.'),
+  ],
+  defaultReply: t("I'm not sure, doctor. He has just been so unsettled.", 'لست متأكدة يا دكتور، كان متضايقاً جداً.'),
+
+  goldStandardDiagnosis: keyed(
+    'aom',
+    t('Acute otitis media (right ear)', 'التهاب الأذن الوسطى الحاد (الأذن اليمنى)'),
+    ['acute otitis media', 'otitis media', 'aom', 'middle ear infection', 'acute suppurative otitis media'],
+    ['التهاب الأذن الوسطى', 'التهاب الأذن الوسطى الحاد', 'التهاب الاذن الوسطى'],
+  ),
+  acceptedDifferentials: [
+    keyed('aom', t('Acute otitis media'), ['acute otitis media', 'otitis media', 'aom', 'middle ear infection'], ['التهاب الأذن الوسطى']),
+    keyed('ome', t('Otitis media with effusion'), ['otitis media with effusion', 'glue ear', 'ome', 'effusion'], ['انصباب الأذن الوسطى', 'الأذن الصمغية']),
+    keyed('otitis_externa', t('Otitis externa'), ['otitis externa', 'external ear infection', "swimmer's ear"], ['التهاب الأذن الخارجية']),
+    keyed('viral_urti', t('Viral URTI / referred pain'), ['urti', 'upper respiratory tract infection', 'viral infection', 'common cold', 'pharyngitis', 'tonsillitis', 'teething'], ['التهاب الجهاز التنفسي العلوي', 'زكام', 'التهاب البلعوم', 'التهاب اللوزتين', 'التسنين']),
+    keyed('mastoiditis', t('Mastoiditis'), ['mastoiditis'], ['التهاب الخشاء']),
+    keyed('meningitis', t('Meningitis'), ['meningitis'], ['التهاب السحايا']),
+    keyed('foreign_body', t('Foreign body in ear'), ['foreign body'], ['جسم غريب']),
+  ],
+  requiredDifferentialCount: 2,
+
+  requiredProtocol: 'NONE',
+  protocolSteps: [],
+
+  conceptDictionary: [
+    concept('ear_pain', 'History', t('Characterises ear pain', 'وصف ألم الأذن'),
+      ['ear pain', 'ear', 'earache', 'pulling', 'tugging', 'which ear'],
+      ['ألم الأذن', 'أذنه', 'الأذن', 'يشد', 'أي أذن']),
+    concept('onset_duration', 'History', t('Onset & duration', 'البداية والمدة'),
+      ['when did', 'how long', 'since when', 'started', 'start', 'how many days'],
+      ['منذ متى', 'من متى', 'متى بدأ', 'متى بدأت', 'كم يوم', 'بدأ']),
+    concept('fever', 'History', t('Fever (height, duration, antipyretics)', 'الحرارة (درجتها، مدتها، خافض الحرارة)'),
+      ['fever', 'temperature', 'hot', 'febrile'],
+      ['حرارة', 'حمى', 'سخونة', 'درجة الحرارة']),
+    concept('preceding_urti', 'History', t('Preceding cold / URTI symptoms', 'أعراض زكام سابقة'),
+      ['cold', 'runny nose', 'cough', 'blocked nose', 'flu'],
+      ['زكام', 'رشح', 'سيلان الأنف', 'سعال', 'كحة', 'انسداد الأنف']),
+    concept('ear_discharge', 'History', t('Ear discharge (perforation)', 'إفرازات من الأذن'),
+      ['discharge', 'fluid', 'pus', 'leaking', 'coming out of'],
+      ['إفرازات', 'سائل', 'صديد', 'يخرج من أذنه']),
+    concept('hearing', 'History', t('Hearing', 'السمع'),
+      ['hearing', 'hear', 'deaf'],
+      ['السمع', 'يسمع', 'سمعه']),
+    concept('hydration', 'History', t('Feeding, fluids & wet nappies', 'الأكل والسوائل والحفاضات'),
+      ['eating', 'drinking', 'feeding', 'fluids', 'wet nappies', 'wet diapers', 'nappies', 'diapers', 'urine', 'peeing'],
+      ['يأكل', 'يشرب', 'الرضاعة', 'سوائل', 'الحفاض', 'الحفاضات', 'يتبول', 'البول']),
+    concept('ruleout_meningism', 'History', t('Red flags: neck stiffness, rash, drowsiness, photophobia', 'علامات الخطر: تيبس الرقبة، طفح، نعاس، رهاب الضوء'),
+      ['neck stiffness', 'stiff neck', 'neck', 'rash', 'drowsy', 'sleepy', 'floppy', 'light', 'fits', 'seizure'],
+      ['تيبس الرقبة', 'رقبته', 'طفح', 'نعسان', 'خامل', 'الضوء', 'تشنجات']),
+    concept('ruleout_mastoid', 'History', t('Swelling behind the ear (mastoiditis)', 'تورم خلف الأذن'),
+      ['behind the ear', 'swelling', 'sticking out', 'sticks out'],
+      ['خلف الأذن', 'تورم', 'انتفاخ', 'تبرز']),
+    concept('gi_symptoms', 'History', t('Vomiting / diarrhoea', 'القيء / الإسهال'),
+      ['vomit', 'vomiting', 'diarrhoea', 'diarrhea', 'tummy'],
+      ['قيء', 'استفراغ', 'ترجيع', 'إسهال']),
+    concept('previous_episodes', 'History', t('Previous ear infections', 'التهابات أذن سابقة'),
+      ['previous', 'recurrent', 'happened before', 'ear infections', 'ear infection before', 'had this before'],
+      ['سابقاً', 'سابقة', 'تكرر', 'التهابات أذن', 'حصل له هذا من قبل']),
+    concept('vaccination', 'History', t('Immunisation status', 'حالة التطعيمات'),
+      ['vaccination', 'vaccinations', 'vaccines', 'immunisation', 'immunization', 'jabs'],
+      ['تطعيم', 'التطعيمات', 'اللقاحات', 'تطعيماته']),
+    concept('allergies', 'History', t('Drug allergies', 'الحساسية الدوائية'),
+      ['allergy', 'allergies', 'allergic'],
+      ['حساسية']),
+    concept('risk_factors', 'History', t('Risk factors (nursery, smoke exposure)', 'عوامل الخطر (الحضانة، التدخين السلبي)'),
+      ['nursery', 'daycare', 'day care', 'school', 'smoke', 'smoking', 'smoker'],
+      ['الحضانة', 'المدرسة', 'يدخن', 'التدخين', 'دخان']),
+
+    // Discharge plan / handoff to parent
+    concept('hand_antibiotic_course', 'Handoff', t('Antibiotic dose & full course explained', 'شرح جرعة المضاد الحيوي وإكمال الكورس'),
+      ['amoxicillin', 'antibiotic', 'complete the course', 'full course', 'twice a day', '10 days'],
+      ['أموكسيسيلين', 'مضاد حيوي', 'إكمال', 'مرتين يومياً', '١٠ أيام']),
+    concept('hand_analgesia', 'Handoff', t('Regular analgesia advised', 'تسكين الألم بانتظام'),
+      ['paracetamol', 'ibuprofen', 'pain relief', 'analgesia', 'painkiller'],
+      ['باراسيتامول', 'إيبوبروفين', 'مسكن', 'تسكين الألم']),
+    concept('hand_safety_net', 'Handoff', t('Safety-net red flags for return', 'علامات الخطر للعودة'),
+      ['return', 'come back', 'red flags', 'stiff neck', 'swelling behind', 'not drinking', 'worse', 'drowsy', 'rash', 'safety net'],
+      ['العودة', 'ارجعي', 'علامات الخطر', 'تيبس الرقبة', 'تورم خلف', 'لا يشرب', 'ساءت', 'نعسان']),
+    concept('hand_review', 'Handoff', t('Review if not improving in 48–72 h', 'المراجعة إذا لم يتحسن خلال ٤٨–٧٢ ساعة'),
+      ['48', '72', 'review', 'follow up', 'follow-up', 'two days', 'three days', 'not improving'],
+      ['٤٨', '٧٢', 'مراجعة', 'متابعة', 'يومين', 'ثلاثة أيام', 'لم يتحسن']),
+  ],
+
+  panelActions: [
+    action('HISTORY_GROWTH_CHART', 'History', t('Review child health record', 'مراجعة سجل صحة الطفل'),
+      t('Weight 14 kg (50th centile). Immunisations up to date. One previous episode of AOM at 18 months.', 'الوزن ١٤ كغ (المئين ٥٠). التطعيمات مكتملة. نوبة التهاب أذن وسطى سابقة بعمر ١٨ شهراً.'),
+      { relevant: true }),
+    action('EXAM_VITALS', 'PhysicalExam', t('Vital signs', 'العلامات الحيوية'),
+      t('Temp 38.9 °C, HR 132, RR 26, SpO₂ 99% on air, capillary refill < 2 s.', 'الحرارة ٣٨.٩، النبض ١٣٢، التنفس ٢٦، الأكسجين ٩٩٪، امتلاء الشعيرات أقل من ثانيتين.'),
+      { relevant: true }),
+    action('EXAM_OTOSCOPY', 'PhysicalExam', t('Otoscopy (both ears)', 'فحص الأذنين بالمنظار'),
+      t('Right: red, bulging tympanic membrane with loss of light reflex and landmarks, no perforation. Left: normal pearly-grey membrane.', 'اليمنى: طبلة حمراء منتفخة مع غياب المنعكس الضوئي والمعالم، دون ثقب. اليسرى: طبلة طبيعية.'),
+      { relevant: true }),
+    action('EXAM_MASTOID', 'PhysicalExam', t('Inspect & palpate mastoid / pinna', 'فحص الخشاء وصيوان الأذن'),
+      t('No post-auricular swelling, erythema or tenderness. Pinna not displaced.', 'لا تورم أو احمرار أو ألم خلف الأذن. الصيوان في مكانه.'),
+      { relevant: true }),
+    action('EXAM_THROAT', 'PhysicalExam', t('Throat & neck examination', 'فحص الحلق والرقبة'),
+      t('Mild pharyngeal erythema, no tonsillar exudate. Small mobile cervical nodes. Neck supple, no meningism.', 'احمرار خفيف في البلعوم دون إفرازات. عقد رقبية صغيرة متحركة. الرقبة لينة، لا علامات سحائية.'),
+      { relevant: true }),
+    action('EXAM_CHEST', 'PhysicalExam', t('Chest examination', 'فحص الصدر'),
+      t('Clear chest, no recession, no added sounds.', 'الصدر سليم، لا انسحاب، لا أصوات إضافية.'),
+      { relevant: true }),
+    action('EXAM_SKIN', 'PhysicalExam', t('Skin check for rash', 'فحص الجلد بحثاً عن طفح'),
+      t('No rash. Non-blanching rash absent.', 'لا يوجد طفح.'),
+      { relevant: true }),
+    action('LAB_CBC_CRP', 'Investigation', t('FBC & CRP', 'صورة دم و CRP'),
+      t('Not indicated in a well child with a clear clinical diagnosis — unnecessary venepuncture.', 'غير مستطب لطفل بحالة جيدة وتشخيص سريري واضح.')),
+    action('LAB_BLOOD_CULTURE', 'Investigation', t('Blood culture', 'زراعة دم'),
+      t('Not indicated.', 'غير مستطب.')),
+    action('LAB_EAR_SWAB', 'Investigation', t('Ear swab culture', 'مسحة أذن'),
+      t('No discharge to sample — not indicated.', 'لا توجد إفرازات — غير مستطب.')),
+    action('IMG_CT_TEMPORAL', 'Investigation', t('CT temporal bones', 'أشعة مقطعية للعظم الصدغي'),
+      t('Unnecessary radiation in a child with uncomplicated AOM and no signs of mastoiditis.', 'إشعاع غير ضروري لطفل بالتهاب أذن غير مختلط.'),
+      { harmful: true, penalty: 2 }),
+    action('TX_AMOXICILLIN', 'Intervention', t('Oral amoxicillin 40–45 mg/kg twice daily for 10 days', 'أموكسيسيلين فموي ٤٠–٤٥ ملغ/كغ مرتين يومياً لمدة ١٠ أيام'),
+      t('Prescribed 600 mg twice daily for 10 days (severe AOM: fever ≥ 39 °C).', 'وُصف ٦٠٠ ملغ مرتين يومياً لمدة ١٠ أيام (التهاب شديد: حرارة ≥ ٣٩).'),
+      { relevant: true }),
+    action('TX_ANALGESIA', 'Intervention', t('Regular paracetamol / ibuprofen (weight-based)', 'باراسيتامول / إيبوبروفين بانتظام (حسب الوزن)'),
+      t('Paracetamol 15 mg/kg and ibuprofen 10 mg/kg advised; first dose of ibuprofen given.', 'نُصح بالباراسيتامول والإيبوبروفين حسب الوزن؛ أُعطيت الجرعة الأولى.'),
+      { relevant: true }),
+    action('TX_CODEINE', 'Intervention', t('Codeine for pain', 'كودايين للألم'),
+      t('Codeine is contraindicated in children under 12 (risk of respiratory depression).', 'الكودايين ممنوع للأطفال دون ١٢ سنة (خطر تثبيط التنفس).'),
+      { harmful: true, penalty: 3 }),
+    action('TX_ASPIRIN', 'Intervention', t('Aspirin for fever', 'أسبرين للحرارة'),
+      t('Aspirin is contraindicated in children (Reye syndrome).', 'الأسبرين ممنوع للأطفال (متلازمة راي).'),
+      { harmful: true, penalty: 3 }),
+    action('TX_DECONGESTANT', 'Intervention', t('Decongestant / antihistamine syrup', 'شراب مزيل احتقان / مضاد هيستامين'),
+      t('No benefit in AOM and not recommended in young children.', 'لا فائدة في التهاب الأذن الوسطى ولا يُنصح به للأطفال الصغار.')),
+    action('PROC_TYMPANOCENTESIS', 'Intervention', t('Tympanocentesis / myringotomy', 'بزل الطبلة / شق الطبلة'),
+      t('Invasive procedure without indication in uncomplicated first-line AOM.', 'إجراء تداخلي دون مؤشر.'),
+      { harmful: true, penalty: 2 }),
+  ],
+
+  disposition: {
+    options: [
+      { key: 'home_amoxicillin', label: t('Home — oral amoxicillin, analgesia, safety-net advice, review if not better in 48–72 h', 'المنزل — أموكسيسيلين فموي، مسكنات، إرشادات أمان، ومراجعة إن لم يتحسن خلال ٤٨–٧٢ ساعة') },
+      { key: 'admit_iv', label: t('Admit to paediatric ward for IV antibiotics', 'إدخال إلى قسم الأطفال لمضادات حيوية وريدية') },
+      { key: 'ent_grommets', label: t('Urgent ENT referral for grommets', 'إحالة عاجلة للأنف والأذن لتركيب أنابيب تهوية') },
+      { key: 'home_no_plan', label: t('Home with reassurance only, no follow-up', 'المنزل مع الطمأنة فقط دون متابعة') },
+    ],
+    correctKey: 'home_amoxicillin',
+  },
+
+  guidelineReferences: [
+    { title: 'Lieberthal AS et al. The Diagnosis and Management of Acute Otitis Media. Pediatrics 2013;131:e964–e999', url: 'https://doi.org/10.1542/peds.2012-3488' },
+    { title: 'NICE NG91 — Otitis media (acute): antimicrobial prescribing', url: 'https://www.nice.org.uk/guidance/ng91' },
+    { title: 'MHRA — Codeine: restricted use in children under 12', url: 'https://www.gov.uk/drug-safety-update/codeine-for-analgesia-restricted-use-in-children-because-of-reports-of-morphine-toxicity' },
+  ],
+};

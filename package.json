@@ -1,0 +1,20 @@
+{
+  "name": "vitalist",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Deterministic bilingual clinical simulation & OSCE evaluation platform",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c cyan,magenta \"npm run dev -w server\" \"npm run dev -w client\"",
+    "seed": "npm run seed -w server",
+    "test": "npm test -w server",
+    "build": "npm run build -w client",
+    "start": "npm start -w server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.5"
+  }
+}

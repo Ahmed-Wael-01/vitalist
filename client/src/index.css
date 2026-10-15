@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Vitalist 7-color palette (Blueprint §2) */
+:root {
+  --color-dark-surface: #04222B;   /* App header, sidebar & modal backdrops */
+  --color-card-surface: #0A3D4A;   /* Containers, panels & dark borders */
+  --color-muted-teal: #10606F;     /* Secondary buttons, table headers, muted badges */
+  --color-primary-brand: #1D8B94;  /* Primary CTAs, active tabs, key interactive elements */
+  --color-accent-teal: #4FB8B4;    /* Highlighting, status badges & progress indicators */
+  --color-mint-light: #98D8D0;     /* Hover states, success icons & section headlines */
+  --color-canvas-light: #E2F4F0;   /* Workspace background, text surfaces & light cards */
+}
+
+@theme inline {
+  --color-dark: var(--color-dark-surface);
+  --color-card: var(--color-card-surface);
+  --color-muted: var(--color-muted-teal);
+  --color-brand: var(--color-primary-brand);
+  --color-accent: var(--color-accent-teal);
+  --color-mint: var(--color-mint-light);
+  --color-canvas: var(--color-canvas-light);
+  /* Reserved status colors — never used for data identity */
+  --color-danger: #B42318;
+  --color-warning: #B54708;
+
+  --font-sans: 'Inter', 'IBM Plex Sans Arabic', ui-sans-serif, system-ui, sans-serif;
+}
+
+html[lang='ar'] body {
+  font-family: 'IBM Plex Sans Arabic', 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-canvas text-dark antialiased;
+}
+
+/* Reusable component utilities (v4 @utility so they can be composed with @apply) */
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary { @apply btn bg-brand text-white hover:bg-muted; }
+@utility btn-secondary { @apply btn bg-muted text-white hover:bg-card; }
+@utility btn-ghost { @apply btn border border-muted/30 bg-white text-card hover:border-accent hover:bg-mint/30; }
+@utility btn-danger { @apply btn bg-danger text-white hover:bg-danger/85; }
+@utility card { @apply rounded-xl border border-muted/15 bg-white shadow-sm; }
+@utility input {
+  @apply w-full rounded-lg border border-muted/30 bg-white px-3 py-2 text-sm text-dark placeholder:text-muted/60 focus:border-brand focus:outline-none focus:ring-2 focus:ring-accent/40;
+}
+@utility label { @apply mb-1 block text-xs font-semibold tracking-wide text-muted uppercase; }
+@utility badge { @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium; }
